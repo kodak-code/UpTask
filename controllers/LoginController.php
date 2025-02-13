@@ -30,24 +30,36 @@ class LoginController {
             'titulo' => 'Crear Cuenta'
         ]); 
     }
-    public static function olvide() {
-        echo 'Desde olvide';
+    public static function olvide(Router $router) {
+        // Muestra la vista
+        $router->render('auth/olvide', [
+            'titulo' => 'Olvide mi Password'
+        ]); 
         
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
     }
-    public static function reestablecer() {
-        echo 'Desde reestablecer';
+    public static function reestablecer(Router $router) {
+        // Muestra la vista
+        $router->render('auth/reestablecer', [
+            'titulo' => 'Reestablecer Password'
+        ]); 
         
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         }
     }
-    public static function mensaje() {
-        echo 'Desde mensaje';
+    public static function mensaje(Router $router) {
+         // Muestra la vista
+         $router->render('auth/mensaje', [
+            'titulo' => 'Cuenta Creada Exitosamente'
+        ]); 
     }
-    public static function confirmar() {
-        echo 'Desde confirmar';
+    public static function confirmar(Router $router) {
+        // Muestra la vista
+        $router->render('auth/confirmar', [
+            'titulo' => 'Confirma tu cuenta UpTask'
+        ]); 
     }
 }
