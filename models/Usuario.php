@@ -1,7 +1,9 @@
 <?php
+
 namespace Model;
 
-class Usuario extends ActiveRecord {
+class Usuario extends ActiveRecord
+{
     protected static $tabla = 'usuarios';
     protected static $columnasDB = ['id', 'nombre', 'email', 'password', 'token', 'confirmado'];
 
@@ -15,7 +17,20 @@ class Usuario extends ActiveRecord {
         $this->token = $args['token'] ?? '';
         $this->confirmado = $args['confirmado'] ?? 0;
     }
-
+    // Validar el login de usuarios
+    public function validarLogin()
+    {
+        if (!$this->email) {
+            self::$alertas['error'][] = 'El Email es Obligatorio';
+        }
+        if (!$this->password) {
+            self::$alertas['error'][] = 'El Password es Obligatorio';
+        }
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+            self::$alertas['error'][] = 'El Email no es valido';
+        }
+        return self::$alertas;
+    }
     // Validacion para cuentas nuevas
     public function validarNuevaCuenta()
     {
@@ -38,12 +53,13 @@ class Usuario extends ActiveRecord {
     }
 
     // Valida un email
-    public function validarEmail() {
+    public function validarEmail()
+    {
         if (!$this->email) {
             self::$alertas['error'][] = 'El Email es Obligatorio';
         }
 
-        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             self::$alertas['error'][] = 'El Email no es valido';
         }
         return self::$alertas;
@@ -66,5 +82,4 @@ class Usuario extends ActiveRecord {
     {
         $this->token = md5(uniqid());
     }
-
 }
