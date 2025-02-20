@@ -9,9 +9,20 @@ class TareaController
 {
     public static function index()
     {
+        $proyectoId = $_GET['id'];
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        }
+        if(!$proyectoId) header('Location: /dashboard');
+
+        $proyecto = Proyecto::where('url', $proyectoId);
+
+        session_start();
+
+        if(!$proyecto || $proyecto->propietarioId !== $_SESSION['id']) header('Location: /404');
+
+        $tareas = Tarea::belongsto('proyectoId', $proyecto->id);
+
+        echo json_encode(['tareas' => $tareas]);
+        
     }
     public static function crear()
     {
@@ -43,8 +54,9 @@ class TareaController
             $respuesta = [
                 'tipo' => 'exito',
                 'id' => $resultado['id'],
-                'mensaje' => 'Tarea Creada Correctamente'
-            ];
+                'mensaje' => 'Tarea Creada Correctamente',
+                'proyectoId' => $proyecto->id
+            ]; 
 
             echo json_encode($respuesta);
         }
