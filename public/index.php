@@ -1,6 +1,8 @@
 <?php 
 
 require_once __DIR__ . '/../includes/app.php';
+//error_reporting(E_ALL); da errores con Active Record
+ini_set('display_errors', '1');
 
 use Controllers\DashboardController;
 use Controllers\LoginController;
@@ -35,6 +37,9 @@ $router->get('/crear-proyecto', [DashboardController::class, 'crear_proyecto']);
 $router->post('/crear-proyecto', [DashboardController::class, 'crear_proyecto']);
 $router->get('/proyecto', [DashboardController::class, 'proyecto']);
 $router->get('/perfil', [DashboardController::class, 'perfil']);
+$router->post('/perfil', [DashboardController::class, 'perfil']);
+$router->get('/cambiar-password', [DashboardController::class, 'cambiar_password']);
+$router->post('/cambiar-password', [DashboardController::class, 'cambiar_password']);
 
 // API para las tareas
 $router->get('/api/tareas', [TareaController::class, 'index']);
